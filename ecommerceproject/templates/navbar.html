@@ -1,0 +1,46 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{%url 'shop:allProdCat' %}">
+      <img src="{% static 'img/logo.jpg'%}" alt="Bootstrap" width="60" height="auto">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'shop:allProdCat' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown {% if 'shop' in request.path %} active {% endif %}">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Products
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'shop:allProdCat' %}">All Products</a></li>
+              {% for cat in links %}
+            <li><a class="dropdown-item" href="{{ cat.get_url }}">{{ cat.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+        {% if item_count > 0 %}
+          <li class="nav-item">
+              <a class="nav-link disabled" href="{% url 'cart:cart_detail' %}">
+                <span data-fa-i2svg>
+                  <i class="fas fa-cart-shopping"></i>
+                </span>
+                ({{ item_count }})
+               </a>
+          </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex " role="search" action="{% url 'search_app:SearchResult' %}" method="get">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
